@@ -32,33 +32,34 @@ export function updateVesselPhysics(
   }
 
   if (isManual) {
-    // MANUAL WASD CONTROL LOGIC
-    // Base max speed: 4.2 knots, Boost: 6.5 knots
+    // MANUAL WASD CONTROL LOGIC: Acts like a marine throttle telegraph
     const maxForward = keys.shift ? 6.5 : 4.2;
     const maxReverse = -2.0;
 
     if (keys.w) {
-      throttlePct = keys.shift ? 100 : 75;
-      targetSpeed = maxForward;
+      targetSpeed = Math.min(maxForward, vehicle.targetSpeedKnots + 1.5 * deltaSec);
+      throttlePct = (targetSpeed / maxForward) * 100;
     } else if (keys.s) {
-      throttlePct = -60;
-      targetSpeed = maxReverse;
+      targetSpeed = Math.max(maxReverse, vehicle.targetSpeedKnots - 2.5 * deltaSec);
+      throttlePct = (targetSpeed / maxReverse) * -100;
     } else {
-      // Natural water friction drag when no throttle applied
-      throttlePct = 0;
+      // Natural water drag decelerates vessel to 0 if throttle is released
       targetSpeed = 0;
+      throttlePct = 0;
     }
 
     if (keys.a) {
-      rudderPct = -100; // Port turn
-      const turnRate = keys.shift ? 45.0 : 55.0; // deg/sec
+      rudderPct = -100;
+      const turnRate = keys.shift ? 45.0 : 55.0;
       targetHeading = (vehicle.headingDeg - turnRate * deltaSec + 360) % 360;
     } else if (keys.d) {
-      rudderPct = 100; // Starboard turn
-      const turnRate = keys.shift ? 45.0 : 55.0; // deg/sec
+      rudderPct = 100;
+      const turnRate = keys.shift ? 45.0 : 55.0;
       targetHeading = (vehicle.headingDeg + turnRate * deltaSec + 360) % 360;
     } else {
+      // Auto-center rudder when not actively turning
       rudderPct = 0;
+      targetHeading = vehicle.headingDeg;
     }
   } else if (waypoints.length > 0) {
     // AUTONOMOUS WAYPOINT TRACKING & PERPETUAL PATROL

@@ -25,7 +25,7 @@ export const OtrexVehicle3D: React.FC = () => {
   const selectHardware = useSimulationStore((state) => state.selectHardware);
   const openModal = useSimulationStore((state) => state.openModal);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     if (!vehicleGroup.current) return;
     const t = clock.getElapsedTime();
 
@@ -91,17 +91,27 @@ export const OtrexVehicle3D: React.FC = () => {
     // 5. 3-Bladed Propeller High-RPM Spin & Differential Drive
     const speedRatio = Math.max(0, Math.min(1.2, Math.abs(vehicle.speedKnots) / 3.5));
     const spinDirection = vehicle.speedKnots >= 0 ? 1 : -1;
-    const propSpin = t * Math.max(1.5, Math.abs(vehicle.speedKnots)) * 45 * spinDirection;
-
+    
+    // Accumulate rotation so it doesn't jump when speed changes
+    const propSpinDelta = delta * Math.max(0.5, Math.abs(vehicle.speedKnots)) * 25 * spinDirection;
+    
     const diff = (vehicle.rudderPct / 100.0) * 0.25;
     if (leftPropRef.current) {
-      leftPropRef.current.rotation.z = propSpin * (1 + diff);
+      leftPropRef.current.rotation.z += propSpinDelta * (1 + diff);
     }
     if (rightPropRef.current) {
-      rightPropRef.current.rotation.z = -propSpin * (1 - diff);
+      rightPropRef.current.rotation.z -= propSpinDelta * (1 - diff);
     }
 
-    // 6. Dynamic Bow Wave-Piercing Spray Plumes
+    // Vehicle pitch up when accelerating, down when reversing
+    const targetPitch = (vehicle.speedKnots * -1.5 * Math.PI) / 180;
+    vehicleGroup.current.rotation.x = THREE.MathUtils.lerp(
+      vehicleGroup.current.rotation.x,
+      (vehicle.pitchDeg * Math.PI) / 180 + targetPitch,
+      0.1
+    );
+
+    // Dynamic Bow Wave-Piercing Spray Plumes
     const isMovingForward = vehicle.speedKnots > 0.4;
     const sprayScale = isMovingForward ? THREE.MathUtils.clamp(speedRatio * 1.4, 0.2, 1.6) : 0;
 
