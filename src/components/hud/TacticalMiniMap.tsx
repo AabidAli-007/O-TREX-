@@ -101,10 +101,31 @@ export const TacticalMiniMap: React.FC = () => {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
+      // Get latest state directly from store to avoid stale closures in loop
+      const store = useSimulationStore.getState();
+      const currentVehicle = store.vehicle;
+      const currentEnv = store.env;
+      const currentSurveyTrail = store.surveyTrail;
+      const currentWaypoints = store.waypoints;
+
+      // Current map center based on state
+      const currentMapCenterX = autoCenter ? currentVehicle.simX : mapCenter.x;
+      const currentMapCenterZ = autoCenter ? currentVehicle.simZ : mapCenter.z;
+
       const w = canvas.width;
       const h = canvas.height;
       const cx = w / 2;
       const cy = h / 2;
+
+      // Inline worldToScreen to use latest map center
+      const worldToScreenLocal = (wx: number, wz: number, cw: number, ch: number) => {
+        const mcx = cw / 2;
+        const mcy = ch / 2;
+        const scale = (cw / 2) / zoomMeters;
+        const sx = mcx + (wx - currentMapCenterX) * scale;
+        const sy = mcy + (wz - currentMapCenterZ) * scale;
+        return { x: sx, y: sy };
+      };
 
       // 1. Dark ocean tactical background
       ctx.fillStyle = '#050D1A';
@@ -156,14 +177,14 @@ export const TacticalMiniMap: React.FC = () => {
       ctx.stroke();
 
       // 4. Anomaly Zone
-      if (env.anomalyRegion.active) {
-        const as = worldToScreen(
-          env.anomalyRegion.centerSimX,
-          env.anomalyRegion.centerSimZ,
+      if (currentEnv.anomalyRegion.active) {
+        const as = worldToScreenLocal(
+          currentEnv.anomalyRegion.centerSimX,
+          currentEnv.anomalyRegion.centerSimZ,
           w,
           h
         );
-        const aRadPx = (env.anomalyRegion.radiusM / zoomMeters) * (w / 2);
+        const aRadPx = (currentEnv.anomalyRegion.radiusM / zoomMeters) * (w / 2);
 
         // Anomaly fill and border
         ctx.fillStyle = 'rgba(249, 115, 22, 0.12)';
@@ -180,12 +201,12 @@ export const TacticalMiniMap: React.FC = () => {
       }
 
       // 5. Survey Breadcrumb Trail
-      if (surveyTrail.length > 1) {
+      if (currentSurveyTrail.length > 1) {
         ctx.strokeStyle = 'rgba(6, 182, 212, 0.45)';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        surveyTrail.forEach((pt, i) => {
-          const s = worldToScreen(pt.x, pt.z, w, h);
+        currentSurveyTrail.forEach((pt, i) => {
+          const s = worldToScreenLocal(pt.x, pt.z, w, h);
           if (i === 0) ctx.moveTo(s.x, s.y);
           else ctx.lineTo(s.x, s.y);
         });
@@ -193,13 +214,13 @@ export const TacticalMiniMap: React.FC = () => {
       }
 
       // 6. Waypoint Route Line & Waypoint Markers
-      if (waypoints.length > 0) {
+      if (currentWaypoints.length > 0) {
         ctx.strokeStyle = 'rgba(245, 158, 11, 0.65)';
         ctx.lineWidth = 1.8;
         ctx.setLineDash([5, 4]);
         ctx.beginPath();
-        waypoints.forEach((wp, i) => {
-          const s = worldToScreen(wp.lat * 1000, wp.lon * 1000, w, h);
+        currentWaypoints.forEach((wp, i) => {
+          const s = worldToScreenLocal(wp.lat * 1000, wp.lon * 1000, w, h);
           if (i === 0) ctx.moveTo(s.x, s.y);
           else ctx.lineTo(s.x, s.y);
         });
@@ -207,9 +228,9 @@ export const TacticalMiniMap: React.FC = () => {
         ctx.setLineDash([]);
 
         // Waypoints icons
-        waypoints.forEach((wp, idx) => {
-          const s = worldToScreen(wp.lat * 1000, wp.lon * 1000, w, h);
-          const isTarget = vehicle.currentWaypointIndex === idx;
+        currentWaypoints.forEach((wp, idx) => {
+          const s = worldToScreenLocal(wp.lat * 1000, wp.lon * 1000, w, h);
+          const isTarget = currentVehicle.currentWaypointIndex === idx;
 
           // Target pulse halo
           if (isTarget) {
@@ -233,9 +254,9 @@ export const TacticalMiniMap: React.FC = () => {
 
       // 7. Other Existing Ocean Observation Solutions (Nearby O-TREX)
       COMPETITOR_SYSTEMS.forEach((comp) => {
-        const cs = worldToScreen(comp.simCoords[0], comp.simCoords[2], w, h);
+        const cs = worldToScreenLocal(comp.simCoords[0], comp.simCoords[2], w, h);
         const distFromOtrex = Math.round(
-          Math.hypot(comp.simCoords[0] - vehicle.simX, comp.simCoords[2] - vehicle.simZ)
+          Math.hypot(comp.simCoords[0] - currentVehicle.simX, comp.simCoords[2] - currentVehicle.simZ)
         );
 
         let markerColor = '#FACC15'; // default yellow
@@ -278,8 +299,8 @@ export const TacticalMiniMap: React.FC = () => {
       });
 
       // 8. O-TREX Vehicle Vessel Marker (Directional Chevron / Vessel Hull)
-      const vs = worldToScreen(vehicle.simX, vehicle.simZ, w, h);
-      const headingRad = (vehicle.headingDeg * Math.PI) / 180.0;
+      const vs = worldToScreenLocal(currentVehicle.simX, currentVehicle.simZ, w, h);
+      const headingRad = (currentVehicle.headingDeg * Math.PI) / 180.0;
 
       // Projected Heading Vector Line (100m projected)
       const fwdLen = 22;
@@ -328,7 +349,7 @@ export const TacticalMiniMap: React.FC = () => {
 
     animId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(animId);
-  }, [worldToScreen, zoomMeters, mapCenter, env, surveyTrail, waypoints, vehicle]);
+  }, [zoomMeters, mapCenter, autoCenter]);
 
   // If minimized, render compact bar
   if (viewState === 'MIN') {

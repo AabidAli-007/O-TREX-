@@ -37,15 +37,15 @@ export function updateVesselPhysics(
     const maxReverse = -2.0;
 
     if (keys.w) {
-      targetSpeed = Math.min(maxForward, vehicle.targetSpeedKnots + 1.5 * deltaSec);
-      throttlePct = (targetSpeed / maxForward) * 100;
+      targetSpeed = Math.min(maxForward, targetSpeed + 1.5 * deltaSec);
     } else if (keys.s) {
-      targetSpeed = Math.max(maxReverse, vehicle.targetSpeedKnots - 2.5 * deltaSec);
-      throttlePct = (targetSpeed / maxReverse) * -100;
+      targetSpeed = Math.max(maxReverse, targetSpeed - 2.5 * deltaSec);
+    }
+
+    if (targetSpeed >= 0) {
+      throttlePct = (targetSpeed / maxForward) * 100;
     } else {
-      // Natural water drag decelerates vessel to 0 if throttle is released
-      targetSpeed = 0;
-      throttlePct = 0;
+      throttlePct = (targetSpeed / maxReverse) * -100;
     }
 
     if (keys.a) {
