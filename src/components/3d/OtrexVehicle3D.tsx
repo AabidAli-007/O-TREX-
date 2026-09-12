@@ -42,20 +42,20 @@ export const OtrexVehicle3D: React.FC = () => {
     vehicleGroup.current.position.x = THREE.MathUtils.lerp(
       vehicleGroup.current.position.x,
       vehicle.simX,
-      0.22
+      0.35
     );
     vehicleGroup.current.position.z = THREE.MathUtils.lerp(
       vehicleGroup.current.position.z,
       vehicle.simZ,
-      0.22
+      0.35
     );
 
     // 2. Physical Waterline Placement (Zero Clipping)
-    const targetY = buoyancy.waterlineY + 0.08;
+    const targetY = buoyancy.waterlineY + 0.32;
     vehicleGroup.current.position.y = THREE.MathUtils.lerp(
       vehicleGroup.current.position.y,
       targetY,
-      0.25
+      0.35
     );
 
     // 3. Dynamic Wave Slope + Rudder Lean + Acceleration Tilt
@@ -91,7 +91,7 @@ export const OtrexVehicle3D: React.FC = () => {
     // 5. 3-Bladed Propeller High-RPM Spin & Differential Drive
     const speedRatio = Math.max(0, Math.min(1.2, Math.abs(vehicle.speedKnots) / 3.5));
     const spinDirection = vehicle.speedKnots >= 0 ? 1 : -1;
-    const propSpin = t * Math.max(1.5, Math.abs(vehicle.speedKnots)) * 28 * spinDirection;
+    const propSpin = t * Math.max(1.5, Math.abs(vehicle.speedKnots)) * 45 * spinDirection;
 
     const diff = (vehicle.rudderPct / 100.0) * 0.25;
     if (leftPropRef.current) {

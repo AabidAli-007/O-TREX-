@@ -8,37 +8,34 @@ export const BOMEstimator: React.FC = () => {
   const closeModal = useSimulationStore((state) => state.closeModal);
   const bomItems = useSimulationStore((state) => state.bomItems);
   const updateBOMItem = useSimulationStore((state) => state.updateBOMItem);
-  const inrExchangeRate = useSimulationStore((state) => state.inrExchangeRate);
-  const setInrExchangeRate = useSimulationStore((state) => state.setInrExchangeRate);
   const contingencyPct = useSimulationStore((state) => state.contingencyPct);
   const setContingencyPct = useSimulationStore((state) => state.setContingencyPct);
 
   if (activeModal !== 'BOM') return null;
 
   // Calculate Subtotal & Totals
-  const subtotalUsd = bomItems.reduce(
-    (sum, item) => sum + item.unitCostUsd * item.quantity,
+  const subtotalInr = bomItems.reduce(
+    (sum, item) => sum + item.unitCostInr * item.quantity,
     0
   );
-  const contingencyUsd = (subtotalUsd * contingencyPct) / 100;
-  const totalUsd = subtotalUsd + contingencyUsd;
-  const totalInr = totalUsd * inrExchangeRate;
+  const contingencyInr = (subtotalInr * contingencyPct) / 100;
+  const totalInr = subtotalInr + contingencyInr;
 
   const handleExportCSV = () => {
-    const headers = ['Category', 'Item_Name', 'Part_Reference', 'Qty', 'Unit_Cost_USD', 'Total_USD', 'Provenance', 'Source_Note'];
+    const headers = ['Category', 'Item_Name', 'Part_Reference', 'Qty', 'Unit_Cost_INR', 'Total_INR', 'Provenance', 'Source_Note'];
     const rows = bomItems.map((item) => [
       item.category,
       item.name,
       item.partNumberOrRef,
       item.quantity,
-      item.unitCostUsd,
-      item.unitCostUsd * item.quantity,
+      item.unitCostInr,
+      item.unitCostInr * item.quantity,
       item.provenanceType,
       item.sourceNote
     ]);
-    rows.push(['TOTALS', 'Subtotal', '', '', '', subtotalUsd, '', '']);
-    rows.push(['TOTALS', `Contingency (${contingencyPct}%)`, '', '', '', contingencyUsd, '', '']);
-    rows.push(['TOTALS', 'GRAND TOTAL', '', '', '', totalUsd, '', `INR: ₹${totalInr.toFixed(0)}`]);
+    rows.push(['TOTALS', 'Subtotal', '', '', '', subtotalInr, '', '']);
+    rows.push(['TOTALS', `Contingency (${contingencyPct}%)`, '', '', '', contingencyInr, '', '']);
+    rows.push(['TOTALS', 'GRAND TOTAL', '', '', '', totalInr, '', `INR: ₹${totalInr.toFixed(0)}`]);
 
     const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -102,29 +99,18 @@ export const BOMEstimator: React.FC = () => {
               />
               <span className="text-gray-400">%</span>
             </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-gray-400">USD/INR Rate:</span>
-              <input
-                type="number"
-                value={inrExchangeRate}
-                onChange={(e) => setInrExchangeRate(Number(e.target.value))}
-                className="w-16 bg-navy-900 border border-navy-700 px-2 py-0.5 rounded text-orange-400 text-xs font-bold"
-              />
-              <span className="text-[10px] text-gray-400">(User configured)</span>
-            </div>
           </div>
 
           {/* Grand Total Callout */}
           <div className="flex items-center gap-6">
             <div className="text-right">
               <span className="text-[10px] text-gray-400 block">SUBTOTAL</span>
-              <span className="text-white font-bold">{formatCurrency(subtotalUsd, 'USD')}</span>
+              <span className="text-white font-bold">{formatCurrency(subtotalInr, 'INR')}</span>
             </div>
             <div className="text-right">
               <span className="text-[10px] text-gray-400 block">EST. PROTOTYPE BUILD COST</span>
               <span className="text-lg font-extrabold text-orange-400">
-                {formatCurrency(totalUsd, 'USD')} / {formatCurrency(totalInr, 'INR')}
+                {formatCurrency(totalInr, 'INR')}
               </span>
             </div>
           </div>
@@ -144,8 +130,8 @@ export const BOMEstimator: React.FC = () => {
                   <th className="p-2.5">Category</th>
                   <th className="p-2.5">Component / Specification</th>
                   <th className="p-2.5 w-16 text-center">Qty</th>
-                  <th className="p-2.5 w-28 text-right">Unit ($)</th>
-                  <th className="p-2.5 w-28 text-right">Subtotal ($)</th>
+                  <th className="p-2.5 w-32 text-right">Unit (₹)</th>
+                  <th className="p-2.5 w-32 text-right">Subtotal (₹)</th>
                   <th className="p-2.5">Cost Provenance & Source</th>
                 </tr>
               </thead>
@@ -173,16 +159,16 @@ export const BOMEstimator: React.FC = () => {
                       <input
                         type="number"
                         min="0"
-                        step="5"
-                        value={item.unitCostUsd}
+                        step="500"
+                        value={item.unitCostInr}
                         onChange={(e) =>
-                          updateBOMItem(item.id, { unitCostUsd: Math.max(0, Number(e.target.value)) })
+                          updateBOMItem(item.id, { unitCostInr: Math.max(0, Number(e.target.value)) })
                         }
-                        className="w-20 bg-navy-950 border border-navy-700 px-1 py-0.5 rounded text-right text-orange-400 font-bold text-xs"
+                        className="w-24 bg-navy-950 border border-navy-700 px-1 py-0.5 rounded text-right text-orange-400 font-bold text-xs"
                       />
                     </td>
                     <td className="p-2.5 text-right font-bold text-white">
-                      ${(item.unitCostUsd * item.quantity).toFixed(2)}
+                      ₹{(item.unitCostInr * item.quantity).toFixed(0)}
                     </td>
                     <td className="p-2.5 text-[10px]">
                       <div className="flex items-center gap-1.5">

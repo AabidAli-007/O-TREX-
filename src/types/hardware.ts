@@ -42,7 +42,7 @@ export interface BOMItem {
   name: string;
   partNumberOrRef: string;
   quantity: number;
-  unitCostUsd: number;
+  unitCostInr: number;
   provenanceType: ProvenanceType;
   sourceNote: string;
   sourceUrl: string;

@@ -263,8 +263,8 @@ export const CompetitorModal: React.FC = () => {
                   <tr className="hover:bg-navy-950/40">
                     <td className="p-2.5 font-bold text-white">Operating Cost Scale</td>
                     <td className="p-2.5 text-orange-400 font-bold bg-orange-500/5">Very Low (Autonomous Solar)</td>
-                    <td className="p-2.5 text-red-400">$25,000–$60,000 / day</td>
-                    <td className="p-2.5">Low ($2k-$5k/yr amortized)</td>
+                    <td className="p-2.5 text-red-400">₹21L–₹51L / day</td>
+                    <td className="p-2.5">Low (₹1.7L-₹4.2L/yr amortized)</td>
                     <td className="p-2.5">Medium (Managed service)</td>
                     <td className="p-2.5">High servicing cruises</td>
                   </tr>

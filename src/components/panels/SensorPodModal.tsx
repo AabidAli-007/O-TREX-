@@ -77,7 +77,7 @@ export const SensorPodModal: React.FC = () => {
               <div className="text-right">
                 <div className="text-[10px] text-gray-400">APPROXIMATE OEM COST</div>
                 <div className="text-lg font-bold text-white">
-                  {formatCurrency(currentSensor.approxCostUsd, 'USD')} / {formatCurrency(currentSensor.approxCostInr, 'INR')}
+                  {formatCurrency(currentSensor.approxCostInr, 'INR')}
                 </div>
                 <span className="text-[9px] px-1.5 py-0.5 rounded bg-navy-950 text-orange-400 border border-orange-500/40 font-mono">
                   {currentSensor.provenanceType.replace(/_/g, ' ')}

@@ -125,15 +125,26 @@ export const UnderwaterEnvironment3D: React.FC = () => {
         py += Math.cos(t * 0.8 + i) * 0.012;
 
         // Wrap around vehicle boundary
-        if (pz - vehicle.simZ > 22) pz = vehicle.simZ - 22;
-        if (px - vehicle.simX > 22) px = vehicle.simX - 22;
-        if (px - vehicle.simX < -22) px = vehicle.simX + 22;
+        if (pz - vehicle.simZ > 22) pz -= 44;
+        if (pz - vehicle.simZ < -22) pz += 44;
+        if (px - vehicle.simX > 22) px -= 44;
+        if (px - vehicle.simX < -22) px += 44;
 
         posAttr.setXYZ(i, px, py, pz);
       }
       posAttr.needsUpdate = true;
     }
   });
+
+  const getWrapPos = (baseX: number, baseZ: number, extent: number) => {
+    let dx = (baseX - vehicle.simX) % extent;
+    let dz = (baseZ - vehicle.simZ) % extent;
+    if (dx > extent / 2) dx -= extent;
+    if (dx < -extent / 2) dx += extent;
+    if (dz > extent / 2) dz -= extent;
+    if (dz < -extent / 2) dz += extent;
+    return [vehicle.simX + dx, vehicle.simZ + dz];
+  };
 
   return (
     <group>
@@ -189,7 +200,7 @@ export const UnderwaterEnvironment3D: React.FC = () => {
 
       {/* Central Sunlit Golden Caustic Sand Clearing */}
       <mesh
-        position={[vehicle.simX, seabedDepth + 0.05, vehicle.simZ]}
+        position={[getWrapPos(0, 0, 80)[0], seabedDepth + 0.05, getWrapPos(0, 0, 80)[1]]}
         rotation={[-Math.PI / 2, 0, 0]}
         receiveShadow
       >
@@ -203,7 +214,7 @@ export const UnderwaterEnvironment3D: React.FC = () => {
 
       {/* Inner Caustic Highlight Disc */}
       <mesh
-        position={[vehicle.simX, seabedDepth + 0.08, vehicle.simZ]}
+        position={[getWrapPos(0, 0, 80)[0], seabedDepth + 0.08, getWrapPos(0, 0, 80)[1]]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
         <circleGeometry args={[8, 24]} />
@@ -218,9 +229,11 @@ export const UnderwaterEnvironment3D: React.FC = () => {
       {/* ========================================================
           4. SWAYING SEA GRASS BEDS & KELP FRONDS
           ======================================================== */}
-      <group ref={grassGroupRef} position={[vehicle.simX, seabedDepth, vehicle.simZ]}>
-        {grassFronds.map((frond, idx) => (
-          <group key={idx} position={[frond.x, 0, frond.z]}>
+      <group ref={grassGroupRef} position={[0, seabedDepth, 0]}>
+        {grassFronds.map((frond, idx) => {
+          const wrapPos = getWrapPos(frond.x, frond.z, 60);
+          return (
+          <group key={idx} position={[wrapPos[0], 0, wrapPos[1]]}>
             {/* Multiple blades per cluster */}
             {[
               { offX: 0, offZ: 0, rotY: 0, scaleY: 1.0 },
@@ -243,17 +256,20 @@ export const UnderwaterEnvironment3D: React.FC = () => {
               </mesh>
             ))}
           </group>
-        ))}
+          );
+        })}
       </group>
 
       {/* ========================================================
           5. LOW-POLY FACETED ROCK CRAGS & BOULDERS
           ======================================================== */}
-      <group position={[vehicle.simX, seabedDepth, vehicle.simZ]}>
-        {rockClusters.map((rock, idx) => (
+      <group position={[0, seabedDepth, 0]}>
+        {rockClusters.map((rock, idx) => {
+          const wrapPos = getWrapPos(rock.x, rock.z, 80);
+          return (
           <mesh
             key={idx}
-            position={[rock.x, rock.scale[1] * 0.45, rock.z]}
+            position={[wrapPos[0], rock.scale[1] * 0.45, wrapPos[1]]}
             rotation={[0, rock.rotY, 0]}
             scale={rock.scale as [number, number, number]}
             castShadow
@@ -267,15 +283,18 @@ export const UnderwaterEnvironment3D: React.FC = () => {
               flatShading
             />
           </mesh>
-        ))}
+          );
+        })}
       </group>
 
       {/* ========================================================
           6. TURQUOISE BRANCHING CORAL FORMATIONS
           ======================================================== */}
-      <group position={[vehicle.simX, seabedDepth, vehicle.simZ]}>
-        {coralFormations.map((coral, idx) => (
-          <group key={idx} position={[coral.x, 0, coral.z]} scale={[coral.scale, coral.scale, coral.scale]}>
+      <group position={[0, seabedDepth, 0]}>
+        {coralFormations.map((coral, idx) => {
+          const wrapPos = getWrapPos(coral.x, coral.z, 80);
+          return (
+          <group key={idx} position={[wrapPos[0], 0, wrapPos[1]]} scale={[coral.scale, coral.scale, coral.scale]}>
             {/* Central coral stalk */}
             <mesh position={[0, 0.8, 0]}>
               <cylinderGeometry args={[0.18, 0.28, 1.6, 6]} />
@@ -292,14 +311,15 @@ export const UnderwaterEnvironment3D: React.FC = () => {
               <meshStandardMaterial color={coral.color} roughness={0.5} flatShading />
             </mesh>
           </group>
-        ))}
+          );
+        })}
       </group>
 
       {/* ========================================================
           7. SUNKEN SHIPWRECK SILHOUETTE (IN BACKGROUND ON SEABED)
           ======================================================== */}
       <group
-        position={[vehicle.simX + 16, seabedDepth + 1.8, vehicle.simZ - 20]}
+        position={[getWrapPos(16, -20, 160)[0], seabedDepth + 1.8, getWrapPos(16, -20, 160)[1]]}
         rotation={[0.12, Math.PI * 0.35, -0.18]} // Tilted hull resting on sandy floor
       >
         {/* Main derelict hull */}

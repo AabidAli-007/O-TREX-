@@ -107,7 +107,7 @@ export const HardwareExplorer: React.FC = () => {
                 <div className="text-right">
                   <div className="text-[10px] text-gray-400">ESTIMATED PROTOTYPE UNIT COST</div>
                   <div className="text-lg font-bold text-white">
-                    {formatCurrency(currentItem.estCostUsd, 'USD')} / {formatCurrency(currentItem.estCostInr, 'INR')}
+                    {formatCurrency(currentItem.estCostInr, 'INR')}
                   </div>
                   <span className="text-[9px] px-1.5 py-0.5 rounded bg-navy-950 text-orange-400 border border-orange-500/40 font-mono">
                     {currentItem.provenanceType.replace(/_/g, ' ')}

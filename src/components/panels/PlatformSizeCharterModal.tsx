@@ -317,8 +317,8 @@ export const PlatformSizeCharterModal: React.FC = () => {
                     </span>
                   </div>
                   <div className="space-y-1.5 text-gray-300 text-[11px] border-t border-navy-800 pt-2">
-                    <p><strong>Prototype Build BOM:</strong> ~$3,500 USD (₹2.97 Lakh INR)</p>
-                    <p><strong>Daily Operational Footprint:</strong> &lt;$10 USD / day (Solar powered + Iridium SBD packets)</p>
+                    <p><strong>Prototype Build BOM:</strong> ~₹2.97 Lakh INR</p>
+                    <p><strong>Daily Operational Footprint:</strong> &lt;₹850 / day (Solar powered + Iridium SBD packets)</p>
                     <p><strong>Deployment Logistics:</strong> 2-person shore launch or small inflatable boat</p>
                     <p><strong>Recovery:</strong> Fully recoverable, reusable multi-mission platform</p>
                   </div>
@@ -333,9 +333,9 @@ export const PlatformSizeCharterModal: React.FC = () => {
                     </span>
                   </div>
                   <div className="space-y-1.5 text-gray-300 text-[11px] border-t border-navy-800 pt-2">
-                    <p><strong>Daily Operating Rate:</strong> $25,000 – $59,426 / day</p>
-                    <p><strong>30-Day Campaign Total:</strong> ~$750,000 to $1.78M USD per voyage</p>
-                    <p><strong>Vessel Build Cost:</strong> $40M to $120M+ per ship</p>
+                    <p><strong>Daily Operating Rate:</strong> ₹21,25,000 – ₹50,51,210 / day</p>
+                    <p><strong>30-Day Campaign Total:</strong> ~₹6.37 Crores to ₹15.13 Crores per voyage</p>
+                    <p><strong>Vessel Build Cost:</strong> ₹340 Crores to ₹1020+ Crores per ship</p>
                     <p><strong>Carbon Footprint:</strong> ~12 to 20 metric tons diesel / day</p>
                   </div>
                 </div>
@@ -349,8 +349,8 @@ export const PlatformSizeCharterModal: React.FC = () => {
                     </span>
                   </div>
                   <div className="space-y-1.5 text-gray-300 text-[11px] border-t border-navy-800 pt-2">
-                    <p><strong>Core Float Unit Cost:</strong> ~$20,000 – $25,000 USD</p>
-                    <p><strong>BGC-Argo Unit Cost:</strong> Up to $80,000 – $100,000+ USD</p>
+                    <p><strong>Core Float Unit Cost:</strong> ~₹17,00,000 – ₹21,25,000</p>
+                    <p><strong>BGC-Argo Unit Cost:</strong> Up to ₹68,00,000 – ₹85,00,000+</p>
                     <p><strong>Lifecycle Rule:</strong> Official FAQ notes unit cost doubles after deployment logistics and satellite airtime.</p>
                     <p><strong>Expendable Nature:</strong> Rarely recovered at end of life.</p>
                   </div>
@@ -366,7 +366,7 @@ export const PlatformSizeCharterModal: React.FC = () => {
                   </div>
                   <div className="space-y-1.5 text-gray-300 text-[11px] border-t border-navy-800 pt-2">
                     <p><strong>Operating Model:</strong> Data-as-a-Service mission contracting</p>
-                    <p><strong>Estimated Mission Rate:</strong> $2,500 – $4,500 / day</p>
+                    <p><strong>Estimated Mission Rate:</strong> ₹2,12,500 – ₹3,82,500 / day</p>
                     <p><strong>Hardware Sales:</strong> Proprietary enterprise ecosystem; quotes required</p>
                     <p><strong>Logistics:</strong> Requires harbour or specialized boat ramp handling</p>
                   </div>

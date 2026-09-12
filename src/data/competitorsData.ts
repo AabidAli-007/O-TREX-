@@ -12,9 +12,9 @@ export const COMPETITOR_SYSTEMS: CompetitorSystem[] = [
     endurance: '20 to 45 days limited by fuel, water, and crew provisions',
     crewRequired: 'Crewed (20-40 personnel)',
     costModel: {
-      headlineCost: '$25,000 to $60,000+ / day operational rate',
-      unitCostUsdRange: '$40M – $120M build cost per vessel',
-      dailyOpCostUsdRange: '$25,000 – $59,426 / day (NOAA published reference rate)',
+      headlineCost: '₹21,25,000 to ₹51,00,000+ / day operational rate',
+      unitCostUsdRange: '₹340 Crores – ₹1020 Crores build cost per vessel',
+      dailyOpCostUsdRange: '₹21,25,000 – ₹50,51,210 / day (NOAA published reference rate)',
       source: 'NOAA Office of Marine and Aviation Operations (OMAO) & IOOS',
       sourceUrl: 'https://ioos.noaa.gov/project/internet-of-things-in-the-deep-automating-the-collection-of-oceanographic-data-with-smarter-fishing-vessels/',
       costTypeNote: 'Illustrative verified public historical rate. Actual vessel day rates depend on displacement, fuel costs, and scientific staffing.'
@@ -25,7 +25,7 @@ export const COMPETITOR_SYSTEMS: CompetitorSystem[] = [
       'Direct human decision-making and immediate sample processing'
     ],
     limitations: [
-      'Extremely high operating costs ($25k–$60k/day) prevent continuous, persistent spatial monitoring',
+      'Extremely high operating costs (₹21L–₹51L/day) prevent continuous, persistent spatial monitoring',
       'High logistics burden: requires harbour bases, bunkering, and large crew shifts',
       'Inflexible response: cannot easily redirect a cruise track for sudden localized ephemeral anomalies',
       'Carbon-heavy diesel fuel emissions and high human safety risks in severe Southern Ocean storms'
@@ -39,7 +39,7 @@ export const COMPETITOR_SYSTEMS: CompetitorSystem[] = [
       verticalProfiling: 'Winch CTD (on demand)',
       adaptiveResponse: 'Manual decision',
       realTimeComms: 'Broadband Satellite',
-      operationalCost: 'Very High ($25k–$60k/day)'
+      operationalCost: 'Very High (₹21L–₹51L/day)'
     },
     simCoords: [110, 0, -75]
   },
@@ -54,9 +54,9 @@ export const COMPETITOR_SYSTEMS: CompetitorSystem[] = [
     endurance: '4 to 5 years (approx. 150 to 200 profiling cycles)',
     crewRequired: 'Uncrewed (deployment crew required)',
     costModel: {
-      headlineCost: '~$20,000 unit cost (doubles with ops & satellite tracking)',
-      unitCostUsdRange: '$20,000 – $25,000 (Core CTD) / up to $80k–$100k+ for BGC-Argo',
-      dailyOpCostUsdRange: '~$2,000 – $5,000 / year amortized operational & satellite costs',
+      headlineCost: '~₹17,00,000 unit cost (doubles with ops & satellite tracking)',
+      unitCostUsdRange: '₹17L – ₹21.25L (Core CTD) / up to ₹68L–₹85L+ for BGC-Argo',
+      dailyOpCostUsdRange: '~₹1,70,000 – ₹4,25,000 / year amortized operational & satellite costs',
       source: 'Official Argo Program FAQ (UCSD / Scripps / Euro-Argo)',
       sourceUrl: 'https://argo.ucsd.edu/faq/',
       costTypeNote: 'Verified public data. Official FAQ notes unit cost doubles after deployment logistics, satellite airtime, and data management.'
@@ -96,7 +96,7 @@ export const COMPETITOR_SYSTEMS: CompetitorSystem[] = [
     endurance: 'Up to 12 months continuous offshore presence',
     crewRequired: 'Uncrewed',
     costModel: {
-      headlineCost: 'Commercial Data-as-a-Service model ($2,500 – $4,500/day mission rate)',
+      headlineCost: 'Commercial Data-as-a-Service model (₹2,12,500 – ₹3,82,500/day mission rate)',
       unitCostUsdRange: 'Public unit hardware price not disclosed — commercial quote required',
       dailyOpCostUsdRange: 'Data-as-a-service mission contract model',
       source: 'Saildrone Inc. Platform & Service Model Specifications',
@@ -137,9 +137,9 @@ export const COMPETITOR_SYSTEMS: CompetitorSystem[] = [
     endurance: '1 to 2 years before biofouling and battery replacement require ship intervention',
     crewRequired: 'Uncrewed (deployment crew required)',
     costModel: {
-      headlineCost: 'High capital & servicing cost ($50k–$250k initial + ship maintenance)',
-      unitCostUsdRange: '$50,000 – $250,000+ per installed mooring system',
-      dailyOpCostUsdRange: 'Significant dedicated maintenance cruise costs ($50k+ per service trip)',
+      headlineCost: 'High capital & servicing cost (₹42.5L–₹2.12Cr initial + ship maintenance)',
+      unitCostUsdRange: '₹42,50,000 – ₹2,12,50,000+ per installed mooring system',
+      dailyOpCostUsdRange: 'Significant dedicated maintenance cruise costs (₹42.5L+ per service trip)',
       source: 'NOAA PMEL Ocean Moored Buoy Program & OceanSITES',
       sourceUrl: 'https://www.pmel.noaa.gov/',
       costTypeNote: 'Site-, depth-, and sensor-dependent. Ship time for regular servicing represents majority of lifecycle expenditure.'
