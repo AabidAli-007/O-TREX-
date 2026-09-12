@@ -18,8 +18,6 @@ export const TacticalMiniMap: React.FC = () => {
   // Store bindings
   const vehicle = useSimulationStore((state) => state.vehicle);
   const waypoints = useSimulationStore((state) => state.waypoints);
-  const env = useSimulationStore((state) => state.env);
-  const surveyTrail = useSimulationStore((state) => state.surveyTrail);
   const addWaypoint = useSimulationStore((state) => state.addWaypoint);
 
   // UI state: 'MIN' | 'COMPACT' | 'EXPANDED'
@@ -39,19 +37,6 @@ export const TacticalMiniMap: React.FC = () => {
   // Dimensions based on mode
   const width = viewState === 'EXPANDED' ? 380 : 250;
   const height = viewState === 'EXPANDED' ? 310 : 210;
-
-  // Screen <-> World coordinate transformations
-  const worldToScreen = useCallback(
-    (wx: number, wz: number, w: number, h: number) => {
-      const cx = w / 2;
-      const cy = h / 2;
-      const scale = (w / 2) / zoomMeters;
-      const sx = cx + (wx - mapCenter.x) * scale;
-      const sy = cy + (wz - mapCenter.z) * scale;
-      return { x: sx, y: sy };
-    },
-    [mapCenter, zoomMeters]
-  );
 
   const screenToWorld = useCallback(
     (sx: number, sy: number, w: number, h: number) => {
