@@ -24,45 +24,45 @@ export const UnderwaterMarineLife3D: React.FC = () => {
     const list: FishInstance[] = [];
 
     // School 1: Orange/Golden reef fish orbiting the sunlit water column (depth 12m - 24m)
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 35; i++) {
       list.push({
-        baseX: (Math.random() - 0.5) * 6,
-        baseZ: (Math.random() - 0.5) * 6,
-        depth: 12 + Math.random() * 12,
-        radiusX: 5 + Math.random() * 8,
-        radiusZ: 4 + Math.random() * 7,
-        speed: 0.6 + Math.random() * 0.4,
-        phase: (i / 10) * Math.PI * 2,
+        baseX: (Math.random() - 0.5) * 15,
+        baseZ: (Math.random() - 0.5) * 15,
+        depth: 10 + Math.random() * 16,
+        radiusX: 8 + Math.random() * 12,
+        radiusZ: 7 + Math.random() * 10,
+        speed: 0.5 + Math.random() * 0.5,
+        phase: (i / 35) * Math.PI * 2,
         scale: 0.28 + Math.random() * 0.14,
         color: i % 2 === 0 ? '#F97316' : '#F59E0B' // vibrant orange / gold
       });
     }
 
     // School 2: Grazing fish near the sea grass beds and seafloor rocks (depth 28m - 36m)
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 45; i++) {
       list.push({
-        baseX: (Math.random() - 0.5) * 12,
-        baseZ: (Math.random() - 0.5) * 12,
-        depth: 28 + Math.random() * 7,
-        radiusX: 7 + Math.random() * 9,
-        radiusZ: 6 + Math.random() * 8,
+        baseX: (Math.random() - 0.5) * 20,
+        baseZ: (Math.random() - 0.5) * 20,
+        depth: 26 + Math.random() * 10,
+        radiusX: 10 + Math.random() * 12,
+        radiusZ: 8 + Math.random() * 10,
         speed: 0.4 + Math.random() * 0.3,
-        phase: (i / 8) * Math.PI * 2,
+        phase: (i / 45) * Math.PI * 2,
         scale: 0.32 + Math.random() * 0.16,
         color: i % 3 === 0 ? '#FB923C' : i % 3 === 1 ? '#FBBF24' : '#38BDF8'
       });
     }
 
     // School 3: Small curious school swimming around the sensor pod's descent path
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 20; i++) {
       list.push({
-        baseX: 0,
-        baseZ: -0.65,
-        depth: 15 + Math.random() * 15,
-        radiusX: 2.2 + Math.random() * 2.5,
-        radiusZ: 2.2 + Math.random() * 2.5,
+        baseX: (Math.random() - 0.5) * 4,
+        baseZ: -0.65 + (Math.random() - 0.5) * 4,
+        depth: 5 + Math.random() * 25,
+        radiusX: 3 + Math.random() * 4,
+        radiusZ: 3 + Math.random() * 4,
         speed: 0.8 + Math.random() * 0.4,
-        phase: (i / 6) * Math.PI * 2,
+        phase: (i / 20) * Math.PI * 2,
         scale: 0.22 + Math.random() * 0.1,
         color: '#F97316'
       });

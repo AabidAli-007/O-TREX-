@@ -13,7 +13,7 @@ import { useSimulationStore } from '../../store/useSimulationStore';
 
 export const LiveChartsPanel: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState<'TIME_SERIES' | 'DEPTH_PROFILE'>('TIME_SERIES');
+  const [activeTab, setActiveTab] = useState<'TIME_SERIES' | 'DEPTH_PROFILE' | 'COMPARE_ALL'>('TIME_SERIES');
 
   const sensorHistory = useSimulationStore((state) => state.sensorHistory);
   const pod = useSimulationStore((state) => state.pod);
@@ -78,6 +78,16 @@ export const LiveChartsPanel: React.FC = () => {
               >
                 Vertical Depth Profile ({pod.verticalProfilePoints.length} pts)
               </button>
+              <button
+                onClick={() => setActiveTab('COMPARE_ALL')}
+                className={`px-2 py-0.5 rounded transition-colors ${
+                  activeTab === 'COMPARE_ALL'
+                    ? 'bg-orange-500 text-white font-bold'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                Comparative View
+              </button>
             </div>
           )}
         </div>
@@ -90,7 +100,7 @@ export const LiveChartsPanel: React.FC = () => {
       {/* Chart Canvas Body */}
       {isOpen && (
         <div className="h-48 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          {activeTab === 'TIME_SERIES' ? (
+          {activeTab === 'TIME_SERIES' && (
             <>
               {/* Chart 1: Temperature & Dissolved Oxygen */}
               <div className="bg-navy-950 p-2 rounded border border-navy-800 flex flex-col">
@@ -150,7 +160,9 @@ export const LiveChartsPanel: React.FC = () => {
                 </div>
               </div>
             </>
-          ) : (
+          )}
+
+          {activeTab === 'DEPTH_PROFILE' && (
             <>
               {/* Depth Profile: Temperature vs Depth (Thermocline) */}
               <div className="bg-navy-950 p-2 rounded border border-navy-800 flex flex-col">
@@ -227,6 +239,35 @@ export const LiveChartsPanel: React.FC = () => {
                 </div>
               </div>
             </>
+          )}
+
+          {activeTab === 'COMPARE_ALL' && (
+            <div className="bg-navy-950 p-2 rounded border border-navy-800 flex flex-col col-span-1 md:col-span-2 lg:col-span-3">
+              <div className="flex items-center justify-between text-[10px] text-white mb-1">
+                <span className="text-orange-400 font-bold">Comprehensive Parameter Comparison (Normalized Scale)</span>
+                <div className="flex gap-4 text-gray-400">
+                  <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-orange-500"></div>Temp</span>
+                  <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-400"></div>DO</span>
+                  <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-green-400"></div>Turbidity</span>
+                  <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-gray-300"></div>Salinity</span>
+                </div>
+              </div>
+              <div className="flex-1 w-full min-h-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={timeData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#14213D" />
+                    <XAxis dataKey="time" stroke="#E5E5E5" fontSize={9} tickLine={false} />
+                    {/* Normalized Y Axis to show all on one graph clearly */}
+                    <YAxis stroke="#E5E5E5" fontSize={9} domain={['auto', 'auto']} tickLine={false} />
+                    <Tooltip contentStyle={{ backgroundColor: '#14213D', borderColor: '#FCA311', color: '#FFFFFF', fontSize: 10 }} />
+                    <Line type="monotone" dataKey="temp" stroke="#FCA311" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                    <Line type="monotone" dataKey="do" stroke="#60A5FA" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                    <Line type="monotone" dataKey="turbidity" stroke="#4ADE80" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                    <Line type="monotone" dataKey="salinity" stroke="#D1D5DB" strokeWidth={1.5} dot={false} isAnimationActive={false} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
           )}
         </div>
       )}
