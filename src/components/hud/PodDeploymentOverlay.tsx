@@ -39,7 +39,7 @@ export const PodDeploymentOverlay: React.FC = () => {
   const depthPct = Math.min(100, Math.max(0, (pod.depthCurrentM / pod.maxWinchDepthM) * 100));
 
   return (
-    <div className="absolute top-12 left-4 w-80 bg-navy-950/90 backdrop-blur-xl border border-orange-500/40 rounded-xl p-3 text-xs font-mono select-none z-20 shadow-2xl animate-in fade-in slide-in-from-left-4 duration-300 text-gray-200">
+    <div className="absolute top-12 left-4 w-80 bg-navy-950/90 backdrop-blur-xl border border-orange-500/40 rounded-xl p-3 text-xs font-sans select-none z-20 shadow-2xl animate-in fade-in slide-in-from-left-4 duration-300 text-gray-200">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-navy-800 pb-2 mb-2">
         <div className="flex items-center gap-2">

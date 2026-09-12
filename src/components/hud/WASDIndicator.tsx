@@ -23,7 +23,7 @@ export const WASDIndicator: React.FC = () => {
       : 'bg-navy-900/90 text-white hover:bg-navy-700 border-lightgray/30 hover:border-orange/60';
 
   return (
-    <div className="bg-navy/95 backdrop-blur-md border border-orange/40 rounded-xl p-3 shadow-2xl flex flex-col gap-2.5 text-xs font-mono select-none w-72">
+    <div className="bg-navy/95 backdrop-blur-md border border-orange/40 rounded-xl p-3 shadow-2xl flex flex-col gap-2.5 text-xs font-sans select-none w-72">
       {/* Header: Mode & Focus Indicator */}
       <div className="flex items-center justify-between border-b border-lightgray/20 pb-2">
         <div className="flex items-center gap-1.5">

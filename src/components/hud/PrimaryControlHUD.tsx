@@ -26,7 +26,7 @@ export const PrimaryControlHUD: React.FC = () => {
   const vStatus = getVehicleStatus();
 
   return (
-    <div className="bg-navy/95 backdrop-blur-md border border-lightgray/20 rounded-xl px-4 py-2 shadow-2xl flex flex-wrap items-center justify-between gap-4 text-xs font-mono select-none">
+    <div className="bg-navy/95 backdrop-blur-md border border-lightgray/20 rounded-xl px-4 py-2 shadow-2xl flex flex-wrap items-center justify-between gap-4 text-xs font-sans select-none">
       {/* 1. Vehicle & Mission Status */}
       <div className="flex items-center gap-3">
         <div>

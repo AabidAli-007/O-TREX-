@@ -27,7 +27,7 @@ export const PodControlHUD: React.FC = () => {
   };
 
   return (
-    <div className="bg-navy/95 backdrop-blur-md border border-orange/40 rounded-xl p-3 shadow-2xl flex flex-col gap-2.5 text-xs font-mono select-none w-80">
+    <div className="bg-navy/95 backdrop-blur-md border border-orange/40 rounded-xl p-3 shadow-2xl flex flex-col gap-2.5 text-xs font-sans select-none w-80">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-lightgray/20 pb-2">
         <div className="flex items-center gap-2">

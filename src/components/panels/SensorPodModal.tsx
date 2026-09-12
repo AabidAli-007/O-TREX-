@@ -14,7 +14,7 @@ export const SensorPodModal: React.FC = () => {
   const currentSensor = POD_SENSORS.find((s) => s.id === selectedSensorId) || POD_SENSORS[0];
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-mono">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-sans">
       <div className="w-full max-w-4xl bg-navy-900 border border-navy-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-gray-200">
         {/* Header */}
         <div className="h-14 bg-navy-950 px-6 flex items-center justify-between border-b border-navy-800">
@@ -79,7 +79,7 @@ export const SensorPodModal: React.FC = () => {
                 <div className="text-lg font-bold text-white">
                   {formatCurrency(currentSensor.approxCostInr, 'INR')}
                 </div>
-                <span className="text-[9px] px-1.5 py-0.5 rounded bg-navy-950 text-orange-400 border border-orange-500/40 font-mono">
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-navy-950 text-orange-400 border border-orange-500/40 font-sans">
                   {currentSensor.provenanceType.replace(/_/g, ' ')}
                 </span>
               </div>

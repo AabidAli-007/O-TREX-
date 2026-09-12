@@ -18,7 +18,7 @@ export const HardwareExplorer: React.FC = () => {
     HARDWARE_SUBSYSTEMS.find((item) => item.id === selectedHardwareId) || HARDWARE_SUBSYSTEMS[0];
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-mono">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-sans">
       <div className="w-full max-w-5xl bg-navy-900 border border-navy-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-gray-200">
         {/* Modal Header */}
         <div className="h-14 bg-navy-950 px-6 flex items-center justify-between border-b border-navy-800">
@@ -109,44 +109,26 @@ export const HardwareExplorer: React.FC = () => {
                   <div className="text-lg font-bold text-white">
                     {formatCurrency(currentItem.estCostInr, 'INR')}
                   </div>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-navy-950 text-orange-400 border border-orange-500/40 font-mono">
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-navy-950 text-orange-400 border border-orange-500/40 font-sans">
                     {currentItem.provenanceType.replace(/_/g, ' ')}
                   </span>
                 </div>
               </div>
 
               {/* Subsystem Details Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {/* Technical Specifications */}
-                <div className="bg-navy-950 p-3 rounded-lg border border-navy-800">
-                  <h4 className="font-bold text-white text-xs mb-2">Technical Specifications</h4>
-                  <ul className="space-y-1.5 text-gray-300 text-[11px]">
+                <div className="bg-navy-950 p-4 rounded-lg border border-navy-800">
+                  <h4 className="font-bold text-white text-xs mb-3">Technical Specifications</h4>
+                  <ul className="space-y-2 text-gray-300 text-[12px]">
                     {currentItem.specs.map((spec, i) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-orange-400 shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
                         <span>{spec}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-
-                {/* Interfaces & Power */}
-                <div className="bg-navy-950 p-3 rounded-lg border border-navy-800 flex flex-col gap-2.5">
-                  <div>
-                    <h4 className="font-bold text-white text-xs mb-1">Hardware Interface Bus</h4>
-                    <p className="text-gray-400 text-[11px]">{currentItem.interfaceBus}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-xs mb-1">Power Consumption Role</h4>
-                    <p className="text-gray-400 text-[11px]">{currentItem.powerRole}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Why O-TREX Uses It */}
-              <div className="bg-navy-950 p-3 rounded-lg border border-navy-800">
-                <h4 className="font-bold text-orange-400 text-xs mb-1">Why O-TREX Architecture Uses It</h4>
-                <p className="text-gray-200 text-xs leading-relaxed">{currentItem.whyOtrexUsesIt}</p>
               </div>
 
               {/* Source Verification & References */}

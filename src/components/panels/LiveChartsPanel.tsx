@@ -40,7 +40,7 @@ export const LiveChartsPanel: React.FC = () => {
 
   return (
     <div
-      className={`absolute bottom-0 left-0 right-80 bg-navy-900/95 backdrop-blur-md border-t border-navy-700 z-10 transition-all duration-300 font-mono select-none text-gray-200 ${
+      className={`absolute bottom-0 left-0 right-80 bg-navy-900/95 backdrop-blur-md border-t border-navy-700 z-10 transition-all duration-300 font-sans select-none text-gray-200 ${
         isOpen ? 'h-56' : 'h-8'
       }`}
     >

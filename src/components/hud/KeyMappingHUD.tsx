@@ -113,7 +113,7 @@ export const KeyMappingHUD: React.FC = () => {
 
   return (
     <div
-      className="absolute bottom-4 right-4 z-20 font-mono select-none pointer-events-auto"
+      className="absolute bottom-4 right-4 z-20 font-sans select-none pointer-events-auto"
       style={{ maxWidth: '240px' }}
     >
       <div

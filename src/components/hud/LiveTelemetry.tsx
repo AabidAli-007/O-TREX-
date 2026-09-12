@@ -29,7 +29,7 @@ export const LiveTelemetry: React.FC = () => {
   };
 
   return (
-    <aside className="w-80 bg-navy-900/95 backdrop-blur-md border-l border-navy-700 p-3 flex flex-col gap-3 overflow-y-auto text-xs font-mono select-none z-20 text-gray-200">
+    <aside className="w-80 bg-navy-900/95 backdrop-blur-md border-l border-navy-700 p-3 flex flex-col gap-3 overflow-y-auto text-xs font-sans select-none z-20 text-gray-200">
       {/* 1. EDGE AI ANOMALY DETECTION ENGINE */}
       <div className="bg-navy-950 rounded-lg p-2.5 border border-navy-800">
         <div className="flex items-center justify-between mb-1.5">

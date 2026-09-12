@@ -22,7 +22,7 @@ export const PodDrawer: React.FC = () => {
   const stowPod = useSimulationStore((state) => state.stowPod);
 
   return (
-    <div className="w-96 bg-navy-950/95 backdrop-blur-lg border-l border-navy-800 h-full flex flex-col font-mono text-xs select-none shadow-2xl text-gray-200">
+    <div className="w-96 bg-navy-950/95 backdrop-blur-lg border-l border-navy-800 h-full flex flex-col font-sans text-xs select-none shadow-2xl text-gray-200">
       {/* Header */}
       <div className="h-12 bg-navy-900 px-4 flex items-center justify-between border-b border-navy-800">
         <div className="flex items-center gap-2">

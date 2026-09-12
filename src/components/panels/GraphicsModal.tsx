@@ -50,7 +50,7 @@ export const GraphicsModal: React.FC = () => {
   ] as const;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-mono">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-sans">
       <div className="w-full max-w-2xl bg-navy-900 border border-navy-700 rounded-xl shadow-2xl overflow-hidden flex flex-col text-gray-200">
         {/* Header */}
         <div className="h-14 bg-navy-950 px-6 flex items-center justify-between border-b border-navy-800">

@@ -339,7 +339,7 @@ export const TacticalMiniMap: React.FC = () => {
   // If minimized, render compact bar
   if (viewState === 'MIN') {
     return (
-      <div className="absolute bottom-14 left-3 z-30 flex items-center gap-1.5 bg-navy-950/90 backdrop-blur-md border border-navy-700/90 px-2.5 py-1.5 rounded-lg text-xs font-mono shadow-2xl select-none">
+      <div className="absolute bottom-14 left-3 z-30 flex items-center gap-1.5 bg-navy-950/90 backdrop-blur-md border border-navy-700/90 px-2.5 py-1.5 rounded-lg text-xs font-sans shadow-2xl select-none">
         <Compass className="w-3.5 h-3.5 text-orange-400 animate-spin" style={{ animationDuration: '8s' }} />
         <span className="text-gray-200 font-bold text-[10px]">RADAR MAP</span>
         <button
@@ -356,7 +356,7 @@ export const TacticalMiniMap: React.FC = () => {
 
   return (
     <div
-      className={`absolute bottom-14 left-3 z-30 bg-navy-950/95 backdrop-blur-md border border-navy-700/90 rounded-xl shadow-2xl flex flex-col overflow-hidden select-none font-mono transition-all duration-200`}
+      className={`absolute bottom-14 left-3 z-30 bg-navy-950/95 backdrop-blur-md border border-navy-700/90 rounded-xl shadow-2xl flex flex-col overflow-hidden select-none font-sans transition-all duration-200`}
       style={{ width: `${width}px` }}
     >
       {/* Header Bar */}
@@ -454,7 +454,7 @@ export const TacticalMiniMap: React.FC = () => {
           <span className="text-orange-400">
             WP: {vehicle.currentWaypointIndex + 1}/{waypoints.length}
           </span>
-          <span className="text-gray-300 font-mono">
+          <span className="text-gray-300 font-sans">
             {vehicle.lat.toFixed(3)}, {vehicle.lon.toFixed(3)}
           </span>
         </div>

@@ -18,7 +18,7 @@ export const MissionControls: React.FC = () => {
   const manualRetractPod = useSimulationStore((state) => state.manualRetractPod);
 
   return (
-    <div className="bg-navy-900/95 backdrop-blur-md border border-navy-700 rounded-lg p-2.5 shadow-xl flex flex-wrap items-center justify-between gap-2.5 text-xs font-mono select-none text-gray-200">
+    <div className="bg-navy-900/95 backdrop-blur-md border border-navy-700 rounded-lg p-2.5 shadow-xl flex flex-wrap items-center justify-between gap-2.5 text-xs font-sans select-none text-gray-200">
       {/* Simulation Speed Buttons */}
       <div className="flex items-center gap-1.5 bg-navy-950 p-1 rounded border border-navy-800">
         <span className="text-[10px] text-gray-400 px-1">SPEED:</span>

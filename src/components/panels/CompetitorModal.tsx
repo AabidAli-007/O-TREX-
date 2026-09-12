@@ -17,7 +17,7 @@ export const CompetitorModal: React.FC = () => {
     COMPETITOR_SYSTEMS.find((c) => c.id === selectedCompetitorId) || COMPETITOR_SYSTEMS[0];
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-mono">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-sans">
       <div className="w-full max-w-5xl bg-navy-900 border border-navy-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-gray-200">
         {/* Header */}
         <div className="h-14 bg-navy-950 px-6 flex items-center justify-between border-b border-navy-800">
@@ -201,7 +201,7 @@ export const CompetitorModal: React.FC = () => {
 
             <div className="overflow-x-auto border border-navy-800 rounded-lg">
               <table className="w-full text-left text-[11px]">
-                <thead className="bg-navy-950 text-gray-300 border-b border-navy-800 font-mono">
+                <thead className="bg-navy-950 text-gray-300 border-b border-navy-800 font-sans">
                   <tr>
                     <th className="p-2.5">Feature / Dimension</th>
                     <th className="p-2.5 text-orange-400 font-bold bg-orange-500/10">O-TREX (SIH26065)</th>
@@ -211,7 +211,7 @@ export const CompetitorModal: React.FC = () => {
                     <th className="p-2.5">Moored Buoy</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-navy-800/60 text-gray-300 font-mono">
+                <tbody className="divide-y divide-navy-800/60 text-gray-300 font-sans">
                   <tr className="hover:bg-navy-950/40">
                     <td className="p-2.5 font-bold text-white">Autonomy & Mobility</td>
                     <td className="p-2.5 text-orange-400 font-bold bg-orange-500/5">Autonomous Waypoints</td>

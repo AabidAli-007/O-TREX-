@@ -74,7 +74,7 @@ export const App: React.FC = () => {
 
       {/* 5. OPENING SPLASH / HACKATHON WELCOME SCREEN */}
       {showSplash && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden font-mono">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden font-sans">
           {/* Animated background */}
           <div className="absolute inset-0 bg-navy-950">
             {/* Radial gradient glow */}

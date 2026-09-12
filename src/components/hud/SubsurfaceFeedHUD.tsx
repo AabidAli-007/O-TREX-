@@ -28,7 +28,7 @@ export const SubsurfaceFeedHUD: React.FC = () => {
   const depthPct = Math.min(100, (pod.depthCurrentM / Math.max(1, pod.depthTargetM)) * 100);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-15 font-mono select-none flex flex-col justify-between p-4">
+    <div className="absolute inset-0 pointer-events-none z-15 font-sans select-none flex flex-col justify-between p-4">
 
       {/* Scanline overlay */}
       <div

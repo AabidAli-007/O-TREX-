@@ -17,7 +17,7 @@ export const DecisionBanner: React.FC = () => {
   }
 
   return (
-    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-full max-w-xl px-2 z-20 font-mono select-none pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200">
+    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-full max-w-xl px-2 z-20 font-sans select-none pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200">
       <div className="bg-navy-950/90 backdrop-blur-xl border border-orange-500/50 rounded-xl p-2.5 shadow-2xl text-xs text-gray-200">
         {/* Compact Bar Header */}
         <div className="flex items-center justify-between gap-2">

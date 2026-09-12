@@ -145,14 +145,14 @@ export const OceanCanvas: React.FC = () => {
   return (
     <div className="w-full h-full relative bg-dark-900 overflow-hidden">
       {/* Floating 360-degree Mouse Control Badge */}
-      <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 bg-navy-950/85 backdrop-blur-md border border-navy-700/80 px-2.5 py-1 rounded-lg text-[9.5px] font-mono text-cyan-300 shadow-xl pointer-events-none select-none">
+      <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 bg-navy-950/85 backdrop-blur-md border border-navy-700/80 px-2.5 py-1 rounded-lg text-[9.5px] font-sans text-cyan-300 shadow-xl pointer-events-none select-none">
         <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
         <span className="font-bold">🖱️ DRAG = 360° ROTATE</span>
         <span className="text-gray-400">| SCROLL = ZOOM</span>
       </div>
 
       {/* Floating 3D Camera Mode HUD */}
-      <div className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-navy-950/85 backdrop-blur-md border border-navy-700/80 p-1 rounded-lg text-[10px] font-mono shadow-xl select-none">
+      <div className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-navy-950/85 backdrop-blur-md border border-navy-700/80 p-1 rounded-lg text-[10px] font-sans shadow-xl select-none">
         <span className="text-gray-400 px-1 font-sans text-[9px]">CAM:</span>
         <button
           onClick={() => setCameraMode('FOLLOW')}

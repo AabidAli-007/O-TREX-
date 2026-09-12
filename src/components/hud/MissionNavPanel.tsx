@@ -91,7 +91,7 @@ export const MissionNavPanel: React.FC = () => {
 
   return (
     <aside
-      className="w-72 h-full overflow-y-auto flex flex-col gap-2.5 p-3 font-mono text-xs select-none"
+      className="w-72 h-full overflow-y-auto flex flex-col gap-2.5 p-3 font-sans text-xs select-none"
       style={{
         background: 'rgba(6, 11, 22, 0.97)',
         borderRight: '1px solid rgba(28, 46, 82, 0.7)',

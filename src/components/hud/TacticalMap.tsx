@@ -23,7 +23,7 @@ export const TacticalMap: React.FC = () => {
 
   return (
     <div
-      className={`absolute bottom-16 left-4 bg-navy-900/95 backdrop-blur-md border border-navy-700 rounded-lg p-2 shadow-2xl transition-all duration-300 select-none z-20 font-mono text-gray-200 ${
+      className={`absolute bottom-16 left-4 bg-navy-900/95 backdrop-blur-md border border-navy-700 rounded-lg p-2 shadow-2xl transition-all duration-300 select-none z-20 font-sans text-gray-200 ${
         isExpanded ? 'w-88 h-92' : 'w-44 h-48'
       }`}
     >

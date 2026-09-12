@@ -149,7 +149,7 @@ export const TopNavBar: React.FC = () => {
 
   return (
     <header
-      className="h-13 flex-shrink-0 relative z-30 select-none font-mono text-xs flex items-center justify-between px-3 shadow-lg"
+      className="h-13 flex-shrink-0 relative z-30 select-none font-sans text-xs flex items-center justify-between px-3 shadow-lg"
       style={{
         background: 'rgba(6, 11, 22, 0.98)',
         borderBottom: '1px solid rgba(28, 46, 82, 0.8)',

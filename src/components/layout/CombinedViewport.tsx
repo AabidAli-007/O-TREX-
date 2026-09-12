@@ -52,7 +52,7 @@ export const CombinedViewport: React.FC = () => {
   };
 
   return (
-    <div className="relative flex-1 w-full h-full overflow-hidden flex flex-col select-none font-mono min-w-0">
+    <div className="relative flex-1 w-full h-full overflow-hidden flex flex-col select-none font-sans min-w-0">
       {/* Viewport Mode Switcher Toolbar */}
       <div
         className="h-9 flex-shrink-0 flex items-center justify-between px-3 z-20"

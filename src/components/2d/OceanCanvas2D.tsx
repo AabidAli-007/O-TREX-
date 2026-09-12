@@ -714,7 +714,7 @@ export const OceanCanvas2D: React.FC = () => {
   const scaleBar = getScaleBar();
 
   return (
-    <div className="relative w-full h-full bg-navy-950 overflow-hidden select-none font-mono">
+    <div className="relative w-full h-full bg-navy-950 overflow-hidden select-none font-sans">
       {/* HTML5 Master 2D Simulation Canvas */}
       <canvas
         ref={canvasRef}

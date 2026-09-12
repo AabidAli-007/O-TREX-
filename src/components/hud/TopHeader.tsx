@@ -41,7 +41,7 @@ export const TopHeader: React.FC = () => {
   };
 
   return (
-    <header className="h-14 bg-navy border-b border-lightgray/20 px-4 flex items-center justify-between select-none z-30 relative font-mono text-xs">
+    <header className="h-14 bg-navy border-b border-lightgray/20 px-4 flex items-center justify-between select-none z-30 relative font-sans text-xs">
       {/* Brand & Project Identification */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">

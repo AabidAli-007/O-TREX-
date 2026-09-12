@@ -10,7 +10,7 @@ export const PlatformSizeCharterModal: React.FC = () => {
   if (activeModal !== 'SIZE_CHARTER') return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-mono text-gray-200">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-sans text-gray-200">
       <div className="bg-navy-900 border border-navy-700 rounded-2xl w-full max-w-5xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-navy-800 flex items-center justify-between bg-navy-950/80">

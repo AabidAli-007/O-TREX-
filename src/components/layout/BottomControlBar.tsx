@@ -67,7 +67,7 @@ export const BottomControlBar: React.FC = () => {
 
   return (
     <footer
-      className="h-14 flex-shrink-0 relative z-30 select-none font-mono text-xs flex items-center justify-between px-4 shadow-2xl"
+      className="h-14 flex-shrink-0 relative z-30 select-none font-sans text-xs flex items-center justify-between px-4 shadow-2xl"
       style={{
         background: 'rgba(6, 11, 22, 0.98)',
         borderTop: '1px solid rgba(28, 46, 82, 0.8)',

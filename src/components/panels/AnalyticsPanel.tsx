@@ -38,7 +38,7 @@ export const AnalyticsPanel: React.FC = () => {
   const turbStats = calcStats(turbs);
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-mono">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 select-none font-sans">
       <div className="w-full max-w-4xl bg-navy-900 border border-navy-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-gray-200">
         {/* Header */}
         <div className="h-14 bg-navy-950 px-6 flex items-center justify-between border-b border-navy-800">
@@ -160,7 +160,7 @@ export const AnalyticsPanel: React.FC = () => {
               <Clock className="w-3.5 h-3.5 text-orange-400" />
               <span>Event Audit Log & System State Transitions</span>
             </h3>
-            <div className="bg-navy-950 p-3 rounded-lg border border-navy-800 max-h-48 overflow-y-auto space-y-1.5 font-mono text-[11px]">
+            <div className="bg-navy-950 p-3 rounded-lg border border-navy-800 max-h-48 overflow-y-auto space-y-1.5 font-sans text-[11px]">
               {missionLogs.slice(-15).reverse().map((log) => (
                 <div key={log.id} className="flex items-start gap-2 border-b border-navy-900 pb-1">
                   <span className="text-gray-400 shrink-0">
