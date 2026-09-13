@@ -28,7 +28,12 @@ export const KeyboardController: React.FC = () => {
       if (key === 'w' || key === 'a' || key === 's' || key === 'd' || key === 'shift' || key === ' ') {
         e.preventDefault();
         setKeyDown(e.key);
-      } else if (key === 'x' || key === 'p') {
+      } else if (key === 'p') {
+        e.preventDefault();
+        if (!e.repeat) {
+          togglePod();
+        }
+      } else if (key === 'x') {
         e.preventDefault();
         if (!e.repeat) {
           setKeyDown('x');
@@ -54,8 +59,11 @@ export const KeyboardController: React.FC = () => {
           recenterVehicle();
         }
       } else if (key === 'escape') {
-        if (activeModal) {
+        const state = useSimulationStore.getState();
+        if (state.activeModal) {
           closeModal();
+        } else if (state.activeDrawer) {
+          state.toggleDrawer(null);
         } else if (vehicle.emergencyStop) {
           clearEmergencyStop();
         }

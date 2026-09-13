@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Play,
   Pause,
@@ -12,13 +12,14 @@ import {
   BookOpen,
   Anchor,
   Navigation,
-  Activity,
   Gauge,
   MapPin,
   Sliders,
   Ruler,
   Moon,
-  Sun
+  Sun,
+  Waves,
+  ChevronDown
 } from 'lucide-react';
 import { useSimulationStore } from '../../store/useSimulationStore';
 import { formatSeconds } from '../../utils/formatters';
@@ -61,6 +62,8 @@ const getMissionBadgeStyle = (st: string) => {
 };
 
 export const TopNavBar: React.FC = () => {
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
+
   const isRunning = useSimulationStore((state) => state.isRunning);
   const start = useSimulationStore((state) => state.start);
   const pause = useSimulationStore((state) => state.pause);
@@ -76,73 +79,57 @@ export const TopNavBar: React.FC = () => {
 
   const badge = getMissionBadgeStyle(missionState);
 
-  const DrawerBtn = ({
-    id, icon: Icon, label
+  const NavBtn = ({
+    id,
+    icon: Icon,
+    label,
+    isModal = false,
+    modalId
   }: {
-    id: Parameters<typeof toggleDrawer>[0];
+    id?: Parameters<typeof toggleDrawer>[0];
     icon: React.ElementType;
     label: string;
+    isModal?: boolean;
+    modalId?: Parameters<typeof openModal>[0];
   }) => {
-    const active = activeDrawer === id;
+    const active = isModal ? activeModal === modalId : activeDrawer === id;
     return (
       <button
-        onClick={() => toggleDrawer(id)}
+        onClick={() => {
+          if (isModal && modalId) {
+            openModal(modalId);
+          } else if (id) {
+            toggleDrawer(id);
+          }
+        }}
         title={label}
-        className="relative px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all duration-150"
+        className="relative px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all duration-150"
         style={{
           background: active ? 'rgba(252,163,17,0.15)' : 'transparent',
           color: active ? '#FDB642' : '#94A3B8',
           boxShadow: active ? '0 0 0 1px rgba(252,163,17,0.3) inset' : 'none',
         }}
         onMouseEnter={(e) => {
-          if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+          if (!active) {
+            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+            (e.currentTarget as HTMLElement).style.color = '#FFFFFF';
+          }
         }}
         onMouseLeave={(e) => {
-          if (!active) (e.currentTarget as HTMLElement).style.background = 'transparent';
+          if (!active) {
+            (e.currentTarget as HTMLElement).style.background = 'transparent';
+            (e.currentTarget as HTMLElement).style.color = '#94A3B8';
+          }
         }}
       >
         <Icon className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">{label}</span>
+        <span className="hidden md:inline">{label}</span>
         {active && (
           <span
             className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full"
             style={{ background: '#FCA311' }}
           />
         )}
-      </button>
-    );
-  };
-
-  const ModalBtn = ({
-    id, icon: Icon, label, className: cls = ''
-  }: {
-    id: Parameters<typeof openModal>[0];
-    icon: React.ElementType;
-    label: string;
-    className?: string;
-  }) => {
-    const active = activeModal === id;
-    return (
-      <button
-        onClick={() => openModal(id)}
-        title={label}
-        className={`px-2 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all duration-150 ${cls}`}
-        style={{
-          background: active ? 'rgba(252,163,17,0.15)' : 'transparent',
-          color: active ? '#FDB642' : '#64748B',
-          boxShadow: active ? '0 0 0 1px rgba(252,163,17,0.3) inset' : 'none',
-        }}
-        onMouseEnter={(e) => {
-          if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
-          if (!active) (e.currentTarget as HTMLElement).style.color = '#CBD5E1';
-        }}
-        onMouseLeave={(e) => {
-          if (!active) (e.currentTarget as HTMLElement).style.background = 'transparent';
-          if (!active) (e.currentTarget as HTMLElement).style.color = '#64748B';
-        }}
-      >
-        <Icon className="w-3.5 h-3.5" />
-        <span>{label}</span>
       </button>
     );
   };
@@ -156,7 +143,7 @@ export const TopNavBar: React.FC = () => {
         backdropFilter: 'blur(20px)',
       }}
     >
-      {/* Subtle top accent line */}
+      {/* Top accent line */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(252,163,17,0.4), rgba(34,211,238,0.3), transparent)' }}
@@ -164,7 +151,6 @@ export const TopNavBar: React.FC = () => {
 
       {/* 1. Brand + Mission State */}
       <div className="flex items-center gap-3">
-        {/* Logo */}
         <div className="flex items-center gap-2.5">
           <div
             className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-navy-950 text-[11px] tracking-wider flex-shrink-0"
@@ -184,88 +170,109 @@ export const TopNavBar: React.FC = () => {
               >
                 SIH26065
               </span>
-              <span className="text-[9px] text-gray-600 hidden xl:inline tracking-widest">CODE ZEPHYRA</span>
             </div>
-            <span className="text-[8px] text-gray-600 -mt-0.5 hidden 2xl:block tracking-widest">POLAR OCEAN PLATFORM</span>
+            <span className="text-[8px] text-gray-500 -mt-0.5 hidden xl:block tracking-widest uppercase">Autonomous Ocean Observer</span>
           </div>
         </div>
 
         {/* Mission Status Badge */}
         <div
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-bold"
+          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-bold"
           style={{
             background: badge.bg,
-            border: `1px solid ${badge.border}`,
+            border: '1px solid ' + badge.border,
             color: badge.text
           }}
         >
           <span
-            className={`w-1.5 h-1.5 rounded-full ${badge.pulse ? 'animate-ping' : ''}`}
+            className={'w-1.5 h-1.5 rounded-full ' + (badge.pulse ? 'animate-ping' : '')}
             style={{ background: badge.dot, minWidth: '6px' }}
           />
-          <span className="hidden md:inline">{missionState.replace(/_/g, ' ')}</span>
+          <span className="hidden sm:inline">{missionState.replace(/_/g, ' ')}</span>
         </div>
       </div>
 
-      {/* 2. Primary Navigation */}
+      {/* 2. Primary Navigation: O-TREX · MISSION · VEHICLE · OCEAN DATA · POD · MAP · HARDWARE · ANALYTICS */}
       <nav
         className="flex items-center gap-0.5 rounded-xl p-1"
         style={{ background: 'rgba(10, 18, 34, 0.8)', border: '1px solid rgba(28, 46, 82, 0.6)' }}
       >
-        <DrawerBtn id="MISSION" icon={Navigation} label="MISSION" />
-        <DrawerBtn id="VEHICLE" icon={Gauge} label="VEHICLE" />
-        <DrawerBtn id="SENSORS" icon={Activity} label="SENSORS" />
-        <DrawerBtn id="POD" icon={Anchor} label="POD" />
-        <DrawerBtn id="MAP" icon={MapPin} label="MAP" />
-        <DrawerBtn id="ANALYTICS" icon={BarChart3} label="CHARTS" />
+        <NavBtn id="MISSION" icon={Navigation} label="MISSION" />
+        <NavBtn id="VEHICLE" icon={Gauge} label="VEHICLE" />
+        <NavBtn id="OCEAN_DATA" icon={Waves} label="OCEAN DATA" />
+        <NavBtn id="POD" icon={Anchor} label="POD" />
+        <NavBtn id="MAP" icon={MapPin} label="MAP" />
+        <NavBtn isModal modalId="HARDWARE" icon={Cpu} label="HARDWARE" />
+        <NavBtn id="ANALYTICS" icon={BarChart3} label="ANALYTICS" />
 
-        {/* Divider */}
-        <div className="w-px h-4 bg-navy-700 mx-1 hidden lg:block" />
+        {/* Secondary Menu Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setShowMoreMenu(!showMoreMenu)}
+            className="px-2 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white flex items-center gap-1 transition-colors"
+            title="Additional Subsystems & Tools"
+          >
+            <span>MORE</span>
+            <ChevronDown className="w-3 h-3" />
+          </button>
 
-        {/* Modal launchers */}
-        <ModalBtn id="HARDWARE" icon={Cpu} label="HARDWARE" className="hidden lg:flex" />
-        <ModalBtn id="SIZE_CHARTER" icon={Ruler} label="SIZE" className="hidden lg:flex" />
-        <ModalBtn id="COMPETITORS" icon={Layers} label="COMPARE" className="hidden xl:flex" />
-        <ModalBtn id="BOM" icon={Calculator} label="BOM" className="hidden xl:flex" />
-        <ModalBtn id="FAILURES" icon={AlertTriangle} label="FAULTS" className="hidden 2xl:flex" />
-        <ModalBtn id="SOURCES" icon={BookOpen} label="SOURCES" className="hidden 2xl:flex" />
-        <ModalBtn id="GRAPHICS" icon={Sliders} label="GFX" />
-
-        {/* Full viewport toggle */}
-        <button
-          onClick={() => {
-            const state = useSimulationStore.getState();
-            if (state.isLeftPanelOpen || state.isRightPanelOpen) {
-              state.setLeftPanelOpen(false);
-              state.setRightPanelOpen(false);
-            } else {
-              state.setLeftPanelOpen(true);
-              state.setRightPanelOpen(true);
-            }
-          }}
-          className="px-2 py-1.5 rounded-lg text-xs font-bold border transition-all ml-0.5"
-          style={{
-            background: !useSimulationStore((s) => s.isLeftPanelOpen) && !useSimulationStore((s) => s.isRightPanelOpen)
-              ? 'rgba(34,197,94,0.12)'
-              : 'rgba(28,46,82,0.4)',
-            color: !useSimulationStore((s) => s.isLeftPanelOpen) && !useSimulationStore((s) => s.isRightPanelOpen)
-              ? '#86EFAC'
-              : '#94A3B8',
-            borderColor: !useSimulationStore((s) => s.isLeftPanelOpen) && !useSimulationStore((s) => s.isRightPanelOpen)
-              ? 'rgba(34,197,94,0.3)'
-              : 'rgba(28,46,82,0.8)',
-          }}
-          title="Toggle Full Viewport (Zen Mode)"
-        >
-          {!useSimulationStore((s) => s.isLeftPanelOpen) && !useSimulationStore((s) => s.isRightPanelOpen) ? 'FULL' : 'PANELS'}
-        </button>
+          {showMoreMenu && (
+            <div
+              className="absolute top-full mt-1 right-0 w-48 bg-navy-950/98 backdrop-blur-xl border border-navy-700 rounded-xl shadow-2xl p-1.5 z-50 flex flex-col gap-1"
+              onMouseLeave={() => setShowMoreMenu(false)}
+            >
+              <button
+                onClick={() => { openModal('COMPETITORS'); setShowMoreMenu(false); }}
+                className="flex items-center gap-2 p-2 rounded-lg text-left text-xs text-gray-300 hover:text-white hover:bg-navy-900 transition-colors"
+              >
+                <Layers className="w-3.5 h-3.5 text-orange-400" />
+                <span>Existing Systems Compare</span>
+              </button>
+              <button
+                onClick={() => { openModal('BOM'); setShowMoreMenu(false); }}
+                className="flex items-center gap-2 p-2 rounded-lg text-left text-xs text-gray-300 hover:text-white hover:bg-navy-900 transition-colors"
+              >
+                <Calculator className="w-3.5 h-3.5 text-orange-400" />
+                <span>BOM Cost Estimator</span>
+              </button>
+              <button
+                onClick={() => { openModal('SIZE_CHARTER'); setShowMoreMenu(false); }}
+                className="flex items-center gap-2 p-2 rounded-lg text-left text-xs text-gray-300 hover:text-white hover:bg-navy-900 transition-colors"
+              >
+                <Ruler className="w-3.5 h-3.5 text-orange-400" />
+                <span>Hull Sizing Charter</span>
+              </button>
+              <button
+                onClick={() => { openModal('FAILURES'); setShowMoreMenu(false); }}
+                className="flex items-center gap-2 p-2 rounded-lg text-left text-xs text-gray-300 hover:text-white hover:bg-navy-900 transition-colors"
+              >
+                <AlertTriangle className="w-3.5 h-3.5 text-orange-400" />
+                <span>Fault Injection Lab</span>
+              </button>
+              <button
+                onClick={() => { openModal('SOURCES'); setShowMoreMenu(false); }}
+                className="flex items-center gap-2 p-2 rounded-lg text-left text-xs text-gray-300 hover:text-white hover:bg-navy-900 transition-colors"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-orange-400" />
+                <span>Academic Sources</span>
+              </button>
+              <button
+                onClick={() => { openModal('GRAPHICS'); setShowMoreMenu(false); }}
+                className="flex items-center gap-2 p-2 rounded-lg text-left text-xs text-gray-300 hover:text-white hover:bg-navy-900 transition-colors"
+              >
+                <Sliders className="w-3.5 h-3.5 text-orange-400" />
+                <span>3D Ocean Graphics</span>
+              </button>
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* 3. Right Controls */}
       <div className="flex items-center gap-2">
-        {/* Sim Speed */}
+        {/* Speed */}
         <div
-          className="hidden sm:flex items-center p-0.5 rounded-lg text-xs font-bold"
+          className="hidden lg:flex items-center p-0.5 rounded-lg text-xs font-bold"
           style={{ background: 'rgba(10, 18, 34, 0.8)', border: '1px solid rgba(28, 46, 82, 0.6)' }}
         >
           {([1, 2, 4, 8] as const).map((speed) => {
@@ -288,23 +295,17 @@ export const TopNavBar: React.FC = () => {
           })}
         </div>
 
-        {/* Dark Mode Toggle */}
+        {/* Dark Mode */}
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-lg transition-all border"
+          className="p-2 rounded-lg transition-all border text-gray-400 hover:text-white"
           title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           style={{
             background: 'rgba(10, 18, 34, 0.8)',
-            border: '1px solid rgba(28, 46, 82, 0.6)',
-            color: '#94A3B8'
+            border: '1px solid rgba(28, 46, 82, 0.6)'
           }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FDB642'; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#94A3B8'; }}
         >
-          {isDarkMode
-            ? <Sun className="w-3.5 h-3.5" />
-            : <Moon className="w-3.5 h-3.5" />
-          }
+          {isDarkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
         </button>
 
         {/* Judge Tour */}
@@ -320,7 +321,7 @@ export const TopNavBar: React.FC = () => {
           <span className="hidden sm:inline">JUDGE TOUR</span>
         </button>
 
-        {/* Play/Pause/Reset */}
+        {/* Play / Pause / Reset */}
         <div
           className="flex items-center gap-1 p-1 rounded-lg"
           style={{ background: 'rgba(10, 18, 34, 0.8)', border: '1px solid rgba(28, 46, 82, 0.6)' }}
@@ -339,17 +340,13 @@ export const TopNavBar: React.FC = () => {
           </button>
           <button
             onClick={reset}
-            className="p-1.5 rounded-md transition-all"
+            className="p-1.5 rounded-md transition-all text-gray-500 hover:text-white"
             title="Reset Simulation"
-            style={{ color: '#64748B' }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)'; (e.currentTarget as HTMLElement).style.color = '#CBD5E1'; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#64748B'; }}
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
           <div
-            className="px-2 text-[11px] font-bold hidden sm:block tabular-nums"
-            style={{ color: '#E2E8F0' }}
+            className="px-2 text-[11px] font-bold hidden sm:block tabular-nums text-gray-200"
           >
             {formatSeconds(simTime)}
           </div>

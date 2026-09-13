@@ -29,11 +29,12 @@ import { runDecisionEngine } from '../sim/intelligence/decisionEngine';
 import { evaluateMissionStateMachine } from '../sim/stateMachine/missionStateMachine';
 
 export type CameraViewMode = 'FOLLOW' | 'FREE' | 'TOP_DOWN' | 'UNDERWATER_POD' | 'HARDWARE' | 'SIDE';
-export type DrawerType = 'MISSION' | 'VEHICLE' | 'SENSORS' | 'POD' | 'MAP' | 'TELEMETRY' | 'ANALYTICS' | null;
+export type DrawerType = 'MISSION' | 'VEHICLE' | 'OCEAN_DATA' | 'SENSORS' | 'POD' | 'MAP' | 'TELEMETRY' | 'ANALYTICS' | null;
 export type ViewportMode = 'COMBINED' | '3D' | '2D';
 export type ModalType =
   | 'HARDWARE'
   | 'SENSOR_POD'
+  | 'OCEAN_DATA'
   | 'COMPETITORS'
   | 'BOM'
   | 'ANALYTICS'
